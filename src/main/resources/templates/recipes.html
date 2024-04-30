@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0" />
+    <title>Recipes</title>
+
+    <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}" />
+
+    <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css"
+        integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" /> -->
+    <script type="text/javascript" th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+    <style>
+        .badge {
+            margin-left: -10px;
+            background-color: #E91E63 !important;
+        }
+        .spacer {
+            padding-top: 40px;
+            padding-bottom: 40px
+        }
+    </style>
+</head>
+
+<body>
+    <div th:replace="~{fragments/header :: header}"></div>
+
+    <div class="container-fluid" style="max-width: 900px; margin: 0 auto;">
+        
+        <div th:if="${message != null}"
+            class="alert alert-success alert-dismissible fade show text-center message js-alert" role="alert">
+            [[${message}]]
+            <button type="button" class="close btn-sm" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+    
+        <div class="my-3">
+            <h2 class="text-center">Recipes</h2>
+            </p>
+            <form method="get" th:action="@{/recipes}">
+                <input name="keyword" placeholder="Find by recipe name" size="30" th:value="${keyword}" type="text">
+                <input name="keywordIngredient" placeholder="Find by ingredient" size="30" th:value="${keywordIngredient}" type="text">
+                <button class="btn btn-info" type="submit">Search</button>
+                <a th:href="@{/recipes}" class="btn btn-info">Reset</a>
+            </form>
+        </div>
+        <div class="spacer"></div>
+        <div th:if="${recipes.size() > 0}" class="container">
+            <h5 class="m-0 font-weight-bold">Search result</h6>
+            <table class="table table-hover table-responsive-xl table-striped">
+                <thead class="thead-light">
+                    <tr>
+                        <th scope="col">Name</th>
+                        <th scope="col">Description</th>
+                        <th scope="col">Created At</th>
+                    </tr>
+                </thead>
+                <tbody class="table-group-divider">
+                    <tr th:each="recipe : ${recipes}">
+                        <td>
+                            <a class="small" th:href="@{/recipes/{id}(id=${recipe.id})}" th:text="${recipe.name}"></a>
+                        </td>
+                        <th scope="row">[[${recipe.description}]]</th>
+                        <th id="createdAt" scope="row">[[${recipe.createdAt}]]</th>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div th:unless="${recipes.size() > 0}">
+            <span>No recipes found!</span>
+        </div>
+
+    </div>
+
+    <div th:replace="~{fragments/footer :: footer}"></div>
+
+    <script type="text/javascript">
+        if (document.querySelector('.js-alert')) {
+            document.querySelectorAll('.js-alert').forEach(function ($el) {
+                setTimeout(() => {
+                    $el.classList.remove('show');
+                }, 2000);
+            });
+        }
+    </script>
+
+</body>
+
+</html>
