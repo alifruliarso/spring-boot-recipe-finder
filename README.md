@@ -4,7 +4,7 @@
 
 ## Technology Stack
 Spring Boot, Docker, Thymeleaf, Maven, fastcsv\
-Database: GridDB 5.1.0
+Database: GridDB 5.5.0
 
 
 ## Run Application with Docker Compose

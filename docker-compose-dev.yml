@@ -27,7 +27,7 @@ services:
     container_name: griddbrecipefinder-dev
     build:
       context: ./griddbdocker
-      dockerfile: Dockerfile531
+      dockerfile: Dockerfile55
     volumes:
       - griddbrecipefinder-dev-vol:/var/lib/gridstore
     ports:
